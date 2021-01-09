@@ -1,0 +1,4 @@
+fill_gradient_RGBW();
+fill_solid();
+ColorFromPalette_RGBW();
+fill_palette_RGBW()leds;

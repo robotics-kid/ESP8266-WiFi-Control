@@ -1,0 +1,21 @@
+{
+	"leds_settings" : {
+		"data_pin" : 6,
+		"leds_type" : 1,
+		"max_brightness" : 255,
+		"width" : 1,
+		"height" : 40
+	},
+	"wifi_settings" : {
+		"max_clients_connected" : 4,
+		"wifi_port" : 80,
+		"local_ip" : "192, 168, 4, 1",
+		"subnet_mask" : "255, 255, 255, 0"
+	},
+	"protocol_settings" : {
+		"root_prefix" : "FoViBalTLight",
+		"protocol_arguments_length" : 100,
+		"protocol_all_prefixes_length" : 4
+	},
+	"spiffs_effectt_file_name" : "/effects.txt"
+}
