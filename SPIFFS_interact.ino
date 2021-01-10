@@ -17,7 +17,7 @@ void ReadSPIFFS()
 
   while (file.available()) // Open while() loop while file is available
   {
-    recv_str = file.readStringUntil('\n'); // Read from file until \n while file is available
+    recv_str = file.readStringUntil('!'); // Read from file until \n while file is available
   }
 
   file.close();

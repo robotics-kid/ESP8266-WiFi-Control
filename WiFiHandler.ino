@@ -6,31 +6,17 @@
 //Function sendRecieve - takes date to send and - return recieved date
 void sendRecieve()
 {
-
+  //Serial.println("send recieve enter");
   client.setTimeout(5000);
-  /*Serial.print("Client available: ");
-    Serial.println(client.available());*/
 
   //Send Data to connected client
-  memset(recv, '\0', sizeof(recv));
-  mSend += '\n';
-  mSend.toCharArray(recv, argsLen);
-  client.write(recv);
-
-  /*Serial.print("Sended: ");
-    Serial.println(buf);*/
-
-  // read data from the connected client
-  //while (true)
-  //{
-  // if (client.available() > 0)
-  //   {
-  recv_str = client.readStringUntil('\n');
-  //  break;
-  //}
-  //delay(20);
-  //}
-
+  memset(buf, '\0', sizeof(buf));
+  mSend.toCharArray(buf, argsLen);
+  client.write(buf);
+  client.flush();
+  
+  recv_str = client.readStringUntil('!');
+  client.flush();
 }
 
 //Function turn on special effect proceeding from WiFiHandler array and it's arguments
@@ -55,16 +41,16 @@ void effectHandler()
         gradientEffect_2Val(WiFiHandler);
         break;
     }
-    mSend = String(root_previx) + ";STA:1";
+    mSend = String(root_previx) + ";STA:1!";
 
   }
   else if (!strcmp(WiFiHandler[0].handlerChar, "STA") and WiFiHandler[0].handlerVal == 1)
   {
-    mSend = String(root_previx) + ";LDT:" + String(LEDS_TYPE) + ";STT:" + String(STRIP_TYPE);
+    mSend = String(root_previx) + ";LDT:" + String(LEDS_TYPE) + ";STT:" + String(STRIP_TYPE) + '!';
   }
   else
   {
-    mSend = String(root_previx) + ";STA:1";
+    mSend = String(root_previx) + ";STA:1!";
   }
 
 
@@ -72,9 +58,9 @@ void effectHandler()
 
 void Tokenizer()
 {
-
+  
   if (!strcmp(recv, "")) {
-    mSend = "FoViBalTLight;STA:0";
+    mSend = "FoViBalTLight;STA:0!";
     return;
   }
 
@@ -87,11 +73,14 @@ void Tokenizer()
   flag = false;
   while (token != NULL)
   {
+    //Serial.println(token);
     // Checks if token[0] is equal to root_previx
     if (i == 0 and strcmp(token, root_previx))
     {
       Serial.println("is NULL");
-      mSend = "FoViBalTLight;STA:0";
+      Serial.println(token);
+      Serial.println(strlen(token));
+      mSend = "FoViBalTLight;STA:0!";
       return;
     }
 

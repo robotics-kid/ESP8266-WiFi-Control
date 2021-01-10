@@ -10,10 +10,10 @@
 #define HEIGHT                37
 
 #define APSSID                "FoViBaltLight_01"           // SSID of local WiFi Network
-#define APPSK                 "1234567890"       // Password of local WiFi Netdwork
+#define APPSK                 "qwertyuiop"       // Password of local WiFi Netdwork
 
 #define MAX_CLIENTS           4                 // Maximum clients connection
-int port =                    5297;               // Port number
+int port =                    80;               // Port number
 const char* ip =              "192.168.4.1";    // Local ip for AP
 const char* sub =             "255.255.255.0";
 
@@ -72,12 +72,13 @@ byte rgb_w;
 
 handler WiFiHandler[argsLen]; // Defining an array of handled values
 
-String mSend = String(root_previx) + ";STA:1"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1
-String preRecv = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0";
+String mSend = String(root_previx) + ";STA:1!"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1
+String preRecv = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0!";
 char recv[argsLen];
 String recv_str;
 char *token;
 int i;
+char buf[argsLen];
 bool flag;
 //==============================
 

@@ -13,7 +13,6 @@ std::mutex mtx;
 SOCKET Connection;
 
 int main() {
-	char msg[100] = "FoViBalTLight;EFF:1;HUE:0;SAT:100;VAL:100\n";
 	char rec[100] = { 0 };
 	//Socket connection
 	WSAData wsaData;
@@ -40,18 +39,18 @@ int main() {
 	int i = 0;
 
 	int recvByt = 1;
-	while (true)
-	{
-		//sending ClientID to server
-		ZeroMemory(rec, sizeof(rec));
-
-		recv(Connection, rec, sizeof(rec), NULL);
-		std::cout << "rec: " << rec << std::endl;
-		Sleep(2000);
-		send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:100;VAL:100\n", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:100;VAL:100\n"), NULL);
-		
-		//Sleep(20);
+	while (true) {
+		int bytesSend = send(Connection, "FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!", sizeof("FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!"), NULL);
+		std::cout << "Send: " << bytesSend << std::endl;
+		Sleep(1000);
+		bytesSend = send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!"), NULL);
+		std::cout << "Send: " << bytesSend << std::endl;
+		Sleep(1000);
 	}
+		//send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n"), NULL);
+		//Sleep(1000);
+		//Sleep(20);
+
 
 	
 	//////
