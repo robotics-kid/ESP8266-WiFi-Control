@@ -97,7 +97,7 @@ void setup() {
 void loop() {
 
   client = server.available(); // Starting WiFi Server
-
+  
   if (client) // If client is available
   {
     // Printing message of sucefull connection

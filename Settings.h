@@ -67,8 +67,6 @@ struct HSV_t {
   float v;
 } hsv;
 
-byte rgb_w;
-
 
 handler WiFiHandler[argsLen]; // Defining an array of handled values
 

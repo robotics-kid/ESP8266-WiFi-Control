@@ -1,6 +1,9 @@
 #pragma once
 #include "Settings.h"
 RGB_t rgb_2;
+int white;
+int white_2;
+int isWhite;
 
 // Fills led strip with solid color from recieved data
 void colorEffect(handler Wargs[])
@@ -9,8 +12,8 @@ void colorEffect(handler Wargs[])
   rgb.r = Wargs[1].handlerVal;
   rgb.g = Wargs[2].handlerVal;
   rgb.b = Wargs[3].handlerVal;
-  int white = Wargs[4].handlerVal;
-  int isWhite = LEDS_TYPE;
+  white = Wargs[4].handlerVal;
+  isWhite = LEDS_TYPE;
 
   /*
     HSV_t hsv;
@@ -85,13 +88,13 @@ void gradientEffect_2Val(handler Wargs[])
   rgb.r = Wargs[1].handlerVal;
   rgb.g = Wargs[2].handlerVal;
   rgb.b = Wargs[3].handlerVal;
-  int white_1 = Wargs[4].handlerVal;
+  white = Wargs[4].handlerVal;
 
   rgb_2.r = Wargs[5].handlerVal;
   rgb_2.g = Wargs[6].handlerVal;
   rgb_2.b = Wargs[7].handlerVal;
-  int white_2 = Wargs[8].handlerVal;
-  int isWhite = LEDS_TYPE;
+  white_2 = Wargs[8].handlerVal;
+  isWhite = LEDS_TYPE;
 
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
@@ -100,7 +103,7 @@ void gradientEffect_2Val(handler Wargs[])
   }
   else
   {
-    fill_gradient_RGBW(ledsW, NUM_LEDS, CRGBW(rgb.r, rgb.g, rgb.b, white_2), CRGBW(rgb_2.r, rgb_2.g, rgb_2.b, white_1));
+    fill_gradient_RGBW(ledsW, NUM_LEDS, CRGBW(rgb.r, rgb.g, rgb.b, white_2), CRGBW(rgb_2.r, rgb_2.g, rgb_2.b, white));
   }
   FastLED.show();
 }
