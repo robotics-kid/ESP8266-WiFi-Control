@@ -109,18 +109,18 @@ void loop() {
     {
       memset(recv, '\0', sizeof(recv));
 
-      Serial.println();
+      /*Serial.println();
       Serial.print("mSend: ");
-      Serial.println(mSend);
+      Serial.println(mSend);*/
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
       recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
       if (preRecv == recv_str) {
         //Serial.println("Spam");
         continue;
       }
-      Serial.print("recv: ");
+      /*Serial.print("recv: ");
       Serial.write(recv);
-      Serial.println();
+      Serial.println();*/
 
       Tokenizer(); // Tokenzie recieved from WiFi string and starts effect*/
       if (mSend == "FoViBalTLight;STA:0!")

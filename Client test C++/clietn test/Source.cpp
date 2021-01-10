@@ -37,15 +37,17 @@ int main() {
 	//////////////////////
 	////////////
 	int i = 0;
-
+	char send1[] = "FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!";
+	char send2[] = "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!";
 	int recvByt = 1;
 	while (true) {
-		int bytesSend = send(Connection, "FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!", sizeof("FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!"), NULL);
+		Sleep(3000);
+		int bytesSend = send(Connection, send1, sizeof(send1), NULL	);
 		std::cout << "Send: " << bytesSend << std::endl;
-		Sleep(1000);
-		bytesSend = send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!"), NULL);
+		Sleep(3000);
+		bytesSend = send(Connection, send2, sizeof(send2), NULL);
 		std::cout << "Send: " << bytesSend << std::endl;
-		Sleep(1000);
+		Sleep(3000);
 	}
 		//send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n"), NULL);
 		//Sleep(1000);

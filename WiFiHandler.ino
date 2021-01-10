@@ -13,10 +13,10 @@ void sendRecieve()
   memset(buf, '\0', sizeof(buf));
   mSend.toCharArray(buf, argsLen);
   client.write(buf);
-  client.flush();
+  //client.flush();
   
   recv_str = client.readStringUntil('!');
-  client.flush();
+  //client.flush();
 }
 
 //Function turn on special effect proceeding from WiFiHandler array and it's arguments
@@ -65,7 +65,6 @@ void Tokenizer()
   }
 
   memset(WiFiHandler, '\0', sizeof(handler)*argsLen); // Filling WiFiHandler with NULL values
-  token = "";
 
   token = strtok(recv, del); // Initialize token to split recv by delimiter
 
@@ -78,8 +77,6 @@ void Tokenizer()
     if (i == 0 and strcmp(token, root_previx))
     {
       Serial.println("is NULL");
-      Serial.println(token);
-      Serial.println(strlen(token));
       mSend = "FoViBalTLight;STA:0!";
       return;
     }

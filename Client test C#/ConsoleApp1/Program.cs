@@ -21,9 +21,9 @@ public class clnt
             // use the ipaddress as in the server program
 
             Console.WriteLine("Connected");
-            Console.Write("Enter the string to be transmitted : ");
+            //Console.Write("Enter the string to be transmitted : ");
 
-            String str = Console.ReadLine();
+            string str = "FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0!";
             Stream stm = tcpclnt.GetStream();
 
             ASCIIEncoding asen = new ASCIIEncoding();
@@ -31,17 +31,13 @@ public class clnt
             byte[] send1 = asen.GetBytes("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0;WHT:0!");
             Console.WriteLine("Transmitting.....");
             Console.WriteLine("send: ");
-
-            for (int i = 0; i < str.Length; i++)
-                Console.Write(Convert.ToChar(send[i]));
-            Console.WriteLine();
-
+            System.Threading.Thread.Sleep(1000);
             while (true)
             {
                 stm.Write(send, 0, send.Length);
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(100);
                 stm.Write(send1, 0, send1.Length);
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(100);
             }
 
             byte[] recv = new byte[1024];
