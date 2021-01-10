@@ -1,9 +1,9 @@
 #pragma once
 #include "Settings.h"
 RGB_t rgb_2;
-int white;
-int white_2;
-int isWhite;
+uint16_t white;
+uint16_t white_2;
+bool isWhite;
 
 uint16_t endpos = NUM_LEDS - 1;
 uint16_t startpos = 0;
