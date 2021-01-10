@@ -5,6 +5,16 @@ int white;
 int white_2;
 int isWhite;
 
+uint16_t endpos = NUM_LEDS - 1;
+uint16_t startpos = 0;
+CRGB startcolor, endcolor, tc; 
+CRGBW startcolor_W, endcolor_W, tc_W;
+
+uint16_t t, pixeldistance;
+saccum87 rdistance87, gdistance87, bdistance87, rdelta87, gdelta87, bdelta87, wdistance87, wdelta87;
+accum88 r88, g88, b88, w88;
+int16_t divisor;
+
 // Fills led strip with solid color from recieved data
 void colorEffect(handler Wargs[])
 {
@@ -38,11 +48,15 @@ void colorEffect(handler Wargs[])
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
   {
-    fill_solid(leds, NUM_LEDS, CRGB(rgb.r, rgb.g, rgb.b));
+    for (i = 0; i < NUM_LEDS; i++) {
+      leds[i] = CRGB(rgb.r, rgb.g, rgb.b);
+    }
   }
   else
   {
-    fill_solid(ledsW, NUM_LEDS, CRGBW(rgb.r, rgb.g, rgb.b, white));
+    for (i = 0; i < NUM_LEDS; i++) {
+      ledsW[i] = CRGBW(rgb.r, rgb.g, rgb.b, white);
+    }
   }
   FastLED.show();
 }
@@ -67,11 +81,15 @@ void whiteEffect(handler Wargs[])
   FastLED.setBrightness(Wargs[2].handlerVal);
   if (Wargs[1].handlerVal >= 0 && Wargs[1].handlerVal <= 255)
   {
-    fill_solid(ledsW, NUM_LEDS, CRGBW(Wargs[1].handlerVal, Wargs[1].handlerVal, Wargs[1].handlerVal, 255));
+    for (i = 0; i < NUM_LEDS; i++) {
+      ledsW[i] = CRGBW(Wargs[1].handlerVal, Wargs[1].handlerVal, Wargs[1].handlerVal, 255);
+    }
   }
   else if (Wargs[1].handlerVal > 255 && Wargs[1].handlerVal <= 510)
   {
-    fill_solid(ledsW, NUM_LEDS, CRGBW(255, 255, 255, 255 - (Wargs[1].handlerVal - 255)));
+    for (i = 0; i < NUM_LEDS; i++) {
+      ledsW[i] = CRGBW(255, 255, 255, 255 - (Wargs[1].handlerVal - 255));
+    }
     // CRGBW(0, 0, 0, 255);        Wram white
     // CRGBW(255, 255, 255, 255);  Neitral white
     // CRGBW(255, 255, 255, 0);    Cold white
@@ -99,11 +117,16 @@ void gradientEffect_2Val(handler Wargs[])
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
   {
-    fill_gradient_RGB(leds, NUM_LEDS, CRGB(rgb.r, rgb.g, rgb.b), CRGB(rgb_2.r, rgb_2.g, rgb_2.b));
+    startcolor = CRGB(rgb.r, rgb.g, rgb.b);
+    endcolor = CRGB(rgb_2.r, rgb_2.g, rgb_2.b);
+    fill_gradient_RGB();
   }
   else
   {
-    fill_gradient_RGBW(ledsW, NUM_LEDS, CRGBW(rgb.r, rgb.g, rgb.b, white_2), CRGBW(rgb_2.r, rgb_2.g, rgb_2.b, white));
+    startcolor_W = CRGBW(rgb.r, rgb.g, rgb.b, white_2);
+    endcolor_W = CRGBW(rgb_2.r, rgb_2.g, rgb_2.b, white);
+    fill_gradient_RGBW();
+    //fill_gradient_RGBW(ledsW, NUM_LEDS, CRGBW(rgb.r, rgb.g, rgb.b, white_2), CRGBW(rgb_2.r, rgb_2.g, rgb_2.b, white));
   }
   FastLED.show();
 }
@@ -133,4 +156,85 @@ RGB_t HSV_to_RGB(HSV_t hsv)
   }
   rgb = {(rgb.r + m) * 255, (rgb.g + m) * 255, (rgb.b + m) * 255};
   return rgb;
+}
+
+void fill_gradient_RGB()
+{
+    // if the points are in the wrong order, straighten them
+    if( endpos < startpos ) {
+        t = endpos;
+        tc = endcolor;
+        endcolor = startcolor;
+        endpos = startpos;
+        startpos = t;
+        startcolor = tc;
+    }
+
+    rdistance87 = (endcolor.r - startcolor.r) << 7;
+    gdistance87 = (endcolor.g - startcolor.g) << 7;
+    bdistance87 = (endcolor.b - startcolor.b) << 7;
+
+    pixeldistance = endpos - startpos;
+    divisor = pixeldistance ? pixeldistance : 1;
+
+    rdelta87 = rdistance87 / divisor;
+    gdelta87 = gdistance87 / divisor;
+    bdelta87 = bdistance87 / divisor;
+
+    rdelta87 *= 2;
+    gdelta87 *= 2;
+    bdelta87 *= 2;
+
+    r88 = startcolor.r << 8;
+    g88 = startcolor.g << 8;
+    b88 = startcolor.b << 8;
+    for( i = startpos; i <= endpos; i++) {
+        leds[i] = CRGB( r88 >> 8, g88 >> 8, b88 >> 8);
+        r88 += rdelta87;
+        g88 += gdelta87;
+        b88 += bdelta87;
+    }
+}
+
+void fill_gradient_RGBW()
+{
+    // if the points are in the wrong order, straighten them
+    if (endpos < startpos) {
+        t = endpos;
+        tc_W = endcolor_W;
+        endcolor_W = startcolor_W;
+        endpos = startpos;
+        startpos = t;
+        startcolor_W = tc_W;
+    }
+
+    rdistance87 = (endcolor_W.r - startcolor_W.r) << 7;
+    gdistance87 = (endcolor_W.g - startcolor_W.g) << 7;
+    bdistance87 = (endcolor_W.b - startcolor_W.b) << 7;
+    wdistance87 = (endcolor_W.w - startcolor_W.w) << 7;
+
+     pixeldistance = endpos - startpos;
+     divisor = pixeldistance ? pixeldistance : 1;
+
+     rdelta87 = rdistance87 / divisor;
+     gdelta87 = gdistance87 / divisor;
+     bdelta87 = bdistance87 / divisor;
+     wdelta87 = wdistance87 / divisor;
+
+    rdelta87 *= 2;
+    gdelta87 *= 2;
+    bdelta87 *= 2;
+    wdelta87 *= 2;
+
+     r88 = startcolor_W.r << 8;
+     g88 = startcolor_W.g << 8;
+     b88 = startcolor_W.b << 8;
+     w88 = startcolor_W.w << 8;
+    for ( i = startpos; i <= endpos; i++) {
+        ledsW[i] = CRGBW(r88 >> 8, g88 >> 8, b88 >> 8, w88 >> 8);
+        r88 += rdelta87;
+        g88 += gdelta87;
+        b88 += bdelta87;
+        w88 += wdelta87;
+    }
 }
