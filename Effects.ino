@@ -25,26 +25,6 @@ void colorEffect(handler Wargs[])
   white = Wargs[4].handlerVal;
   isWhite = LEDS_TYPE;
 
-  /*
-    HSV_t hsv;
-    hsv.h = Wargs[1].handlerVal;
-    hsv.s = Wargs[2].handlerVal;
-    hsv.v = Wargs[3].handlerVal;
-    int white = Wargs[4].handlerVal;
-    int isWhite = LEDS_TYPE;
-
-
-    RGB_t rgb = HSV_to_RGB(hsv);
-  */
-  /*Serial.print("Hue: ");
-    Serial.print(hsv.h);
-    Serial.print("Sat: ");
-    Serial.print(hsv.s);
-    Serial.print("Val: ");
-    Serial.print(hsv.v);
-    Serial.print("White: ");
-    Serial.print(white);*/
-
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
   {
