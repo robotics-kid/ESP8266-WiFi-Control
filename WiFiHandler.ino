@@ -60,6 +60,7 @@ void Tokenizer()
 {
   
   if (!strcmp(recv, "")) {
+    Serial.println("NULL string recieved");
     mSend = "FoViBalTLight;STA:0!";
     return;
   }
@@ -72,11 +73,10 @@ void Tokenizer()
   flag = false;
   while (token != NULL)
   {
-    //Serial.println(token);
     // Checks if token[0] is equal to root_previx
     if (i == 0 and strcmp(token, root_previx))
     {
-      Serial.println("is NULL");
+      Serial.println("Root prefix does not match");
       mSend = "FoViBalTLight;STA:0!";
       return;
     }
