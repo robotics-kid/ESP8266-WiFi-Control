@@ -16,21 +16,21 @@ accum88 r88, g88, b88, w88;
 int16_t divisor;
 
 // Fills led strip with solid color from recieved data
-void colorEffect(handler Wargs[])
+void colorEffect()
 {
   memset(&rgb, '\0', sizeof rgb);  // OK as well
-  rgb.r = Wargs[1].handlerVal;
-  rgb.g = Wargs[2].handlerVal;
-  rgb.b = Wargs[3].handlerVal;
-  white = Wargs[4].handlerVal;
+  rgb.r = WiFiHandler[1].handlerVal;
+  rgb.g = WiFiHandler[2].handlerVal;
+  rgb.b = WiFiHandler[3].handlerVal;
+  white = WiFiHandler[4].handlerVal;
   isWhite = LEDS_TYPE;
 
   /*
     HSV_t hsv;
-    hsv.h = Wargs[1].handlerVal;
-    hsv.s = Wargs[2].handlerVal;
-    hsv.v = Wargs[3].handlerVal;
-    int white = Wargs[4].handlerVal;
+    hsv.h = WiFiHandler[1].handlerVal;
+    hsv.s = WiFiHandler[2].handlerVal;
+    hsv.v = WiFiHandler[3].handlerVal;
+    int white = WiFiHandler[4].handlerVal;
     int isWhite = LEDS_TYPE;
 
 
@@ -62,33 +62,33 @@ void colorEffect(handler Wargs[])
 }
 
 // Fills led strip with white color with adjustable color temperature(SK6812 only)
-void whiteEffect(handler Wargs[])
+void whiteEffect()
 {
 
   /*Serial.print("White Kelvin: ");
-    Serial.println(Wargs[1].handlerVal);
+    Serial.println(WiFiHandler[1].handlerVal);
     Serial.print("White BRI recieved: ");
-    Serial.println(Wargs[2].handlerVal);*/
+    Serial.println(WiFiHandler[2].handlerVal);*/
 
-  Wargs[1].handlerVal = map(Wargs[1].handlerVal, 1800, 6500, 0, 510); // Map recieved kelvin values into my pseudo range from 0 - 510
-  Wargs[2].handlerVal = map(Wargs[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNESS
+  WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, 0, 510); // Map recieved kelvin values into my pseudo range from 0 - 510
+  WiFiHandler[2].handlerVal = map(WiFiHandler[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNESS
 
   /*Serial.print("White My pseudo range: ");
-    Serial.println(Wargs[1].handlerVal);
+    Serial.println(WiFiHandler[1].handlerVal);
     Serial.print("White BRI converted towards MAX_BRI: ");
-    Serial.println(Wargs[2].handlerVal);*/
+    Serial.println(WiFiHandler[2].handlerVal);*/
 
-  FastLED.setBrightness(Wargs[2].handlerVal);
-  if (Wargs[1].handlerVal >= 0 && Wargs[1].handlerVal <= 255)
+  FastLED.setBrightness(WiFiHandler[2].handlerVal);
+  if (WiFiHandler[1].handlerVal >= 0 && WiFiHandler[1].handlerVal <= 255)
   {
     for (i = 0; i < NUM_LEDS; i++) {
-      ledsW[i] = CRGBW(Wargs[1].handlerVal, Wargs[1].handlerVal, Wargs[1].handlerVal, 255);
+      ledsW[i] = CRGBW(WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, 255);
     }
   }
-  else if (Wargs[1].handlerVal > 255 && Wargs[1].handlerVal <= 510)
+  else if (WiFiHandler[1].handlerVal > 255 && WiFiHandler[1].handlerVal <= 510)
   {
     for (i = 0; i < NUM_LEDS; i++) {
-      ledsW[i] = CRGBW(255, 255, 255, 255 - (Wargs[1].handlerVal - 255));
+      ledsW[i] = CRGBW(255, 255, 255, 255 - (WiFiHandler[1].handlerVal - 255));
     }
     // CRGBW(0, 0, 0, 255);        Wram white
     // CRGBW(255, 255, 255, 255);  Neitral white
@@ -98,20 +98,20 @@ void whiteEffect(handler Wargs[])
 }
 
 // Fills led strip with static gradient with recieved colors
-void gradientEffect_2Val(handler Wargs[])
+void gradientEffect_2Val()
 {
 
   memset(&rgb, '\0', sizeof rgb);
   memset(&rgb_2, '\0', sizeof rgb_2);
-  rgb.r = Wargs[1].handlerVal;
-  rgb.g = Wargs[2].handlerVal;
-  rgb.b = Wargs[3].handlerVal;
-  white = Wargs[4].handlerVal;
+  rgb.r = WiFiHandler[1].handlerVal;
+  rgb.g = WiFiHandler[2].handlerVal;
+  rgb.b = WiFiHandler[3].handlerVal;
+  white = WiFiHandler[4].handlerVal;
 
-  rgb_2.r = Wargs[5].handlerVal;
-  rgb_2.g = Wargs[6].handlerVal;
-  rgb_2.b = Wargs[7].handlerVal;
-  white_2 = Wargs[8].handlerVal;
+  rgb_2.r = WiFiHandler[5].handlerVal;
+  rgb_2.g = WiFiHandler[6].handlerVal;
+  rgb_2.b = WiFiHandler[7].handlerVal;
+  white_2 = WiFiHandler[8].handlerVal;
   isWhite = LEDS_TYPE;
 
   //-1 goes if led strip does not have white leds or if led strip is SK6812
