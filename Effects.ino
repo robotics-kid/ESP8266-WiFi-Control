@@ -3,11 +3,11 @@
 RGB_t rgb_2;
 uint16_t white;
 uint16_t white_2;
-bool isWhite;
+uint8_t isWhite;
 
 uint16_t endpos = NUM_LEDS - 1;
 uint16_t startpos = 0;
-CRGB startcolor, endcolor, tc; 
+CRGB startcolor, endcolor, tc;
 CRGBW startcolor_W, endcolor_W, tc_W;
 
 uint16_t t, pixeldistance;
@@ -25,29 +25,20 @@ void colorEffect()
   white = WiFiHandler[4].handlerVal;
   isWhite = LEDS_TYPE;
 
-  /*
-    HSV_t hsv;
-    hsv.h = WiFiHandler[1].handlerVal;
-    hsv.s = WiFiHandler[2].handlerVal;
-    hsv.v = WiFiHandler[3].handlerVal;
-    int white = WiFiHandler[4].handlerVal;
-    int isWhite = LEDS_TYPE;
-
-
-    RGB_t rgb = HSV_to_RGB(hsv);
-  */
-  /*Serial.print("Hue: ");
-    Serial.print(hsv.h);
-    Serial.print("Sat: ");
-    Serial.print(hsv.s);
-    Serial.print("Val: ");
-    Serial.print(hsv.v);
-    Serial.print("White: ");
-    Serial.print(white);*/
+  Serial.print("red: ");
+  Serial.println(rgb.r);
+  Serial.print("green: ");
+  Serial.println(rgb.g);
+  
+  Serial.print("blue: ");
+  Serial.println(rgb.b);
+  
+  Serial.print("white: ");
+  Serial.println(white);
 
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
-  {
+  { 
     for (i = 0; i < NUM_LEDS; i++) {
       leds[i] = CRGB(rgb.r, rgb.g, rgb.b);
     }
@@ -65,34 +56,36 @@ void colorEffect()
 void whiteEffect()
 {
 
-  /*Serial.print("White Kelvin: ");
-    Serial.println(WiFiHandler[1].handlerVal);
-    Serial.print("White BRI recieved: ");
-    Serial.println(WiFiHandler[2].handlerVal);*/
+  Serial.print("White Kelvin: ");
+  Serial.println(WiFiHandler[1].handlerVal);
+  Serial.print("White BRI recieved: ");
+  Serial.println(WiFiHandler[2].handlerVal);
 
-  WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, 0, 510); // Map recieved kelvin values into my pseudo range from 0 - 510
+  WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, -255, 765); // Map recieved kelvin values into my pseudo range from 0 - 510
   WiFiHandler[2].handlerVal = map(WiFiHandler[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNESS
 
-  /*Serial.print("White My pseudo range: ");
-    Serial.println(WiFiHandler[1].handlerVal);
-    Serial.print("White BRI converted towards MAX_BRI: ");
-    Serial.println(WiFiHandler[2].handlerVal);*/
+  Serial.print("White My pseudo range: ");
+  Serial.println(WiFiHandler[1].handlerVal);
+  Serial.print("White BRI converted towards MAX_BRI: ");
+  Serial.println(WiFiHandler[2].handlerVal);
 
   FastLED.setBrightness(WiFiHandler[2].handlerVal);
-  if (WiFiHandler[1].handlerVal >= 0 && WiFiHandler[1].handlerVal <= 255)
+
+  if (WiFiHandler[1].handlerVal < 0 && WiFiHandler[1].handlerVal >= -255)
   {
-    for (i = 0; i < NUM_LEDS; i++) {
-      ledsW[i] = CRGBW(WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, 255);
-    }
+    fill_solid(ledsW, NUM_LEDS, CRGBW(WiFiHandler[1].handlerVal * -1, 0, 0, 255));
+  }
+  else if (WiFiHandler[1].handlerVal >= 0 && WiFiHandler[1].handlerVal <= 255)
+  {
+    fill_solid(ledsW, NUM_LEDS, CRGBW(WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, WiFiHandler[1].handlerVal, 255));
   }
   else if (WiFiHandler[1].handlerVal > 255 && WiFiHandler[1].handlerVal <= 510)
   {
-    for (i = 0; i < NUM_LEDS; i++) {
-      ledsW[i] = CRGBW(255, 255, 255, 255 - (WiFiHandler[1].handlerVal - 255));
-    }
-    // CRGBW(0, 0, 0, 255);        Wram white
-    // CRGBW(255, 255, 255, 255);  Neitral white
-    // CRGBW(255, 255, 255, 0);    Cold white
+    fill_solid(ledsW, NUM_LEDS, CRGBW(255, 255, 255, 255 - (WiFiHandler[1].handlerVal - 255)));
+  }
+  else if (WiFiHandler[1].handlerVal > 510 && WiFiHandler[1].handlerVal <= 765)
+  {
+    fill_solid(ledsW, NUM_LEDS, CRGBW(510 - (WiFiHandler[1].handlerVal - 255), 510 - (WiFiHandler[1].handlerVal - 255), 255, 0));
   }
   FastLED.show();
 }
@@ -160,81 +153,81 @@ RGB_t HSV_to_RGB(HSV_t hsv)
 
 void fill_gradient_RGB()
 {
-    // if the points are in the wrong order, straighten them
-    if( endpos < startpos ) {
-        t = endpos;
-        tc = endcolor;
-        endcolor = startcolor;
-        endpos = startpos;
-        startpos = t;
-        startcolor = tc;
-    }
+  // if the points are in the wrong order, straighten them
+  if ( endpos < startpos ) {
+    t = endpos;
+    tc = endcolor;
+    endcolor = startcolor;
+    endpos = startpos;
+    startpos = t;
+    startcolor = tc;
+  }
 
-    rdistance87 = (endcolor.r - startcolor.r) << 7;
-    gdistance87 = (endcolor.g - startcolor.g) << 7;
-    bdistance87 = (endcolor.b - startcolor.b) << 7;
+  rdistance87 = (endcolor.r - startcolor.r) << 7;
+  gdistance87 = (endcolor.g - startcolor.g) << 7;
+  bdistance87 = (endcolor.b - startcolor.b) << 7;
 
-    pixeldistance = endpos - startpos;
-    divisor = pixeldistance ? pixeldistance : 1;
+  pixeldistance = endpos - startpos;
+  divisor = pixeldistance ? pixeldistance : 1;
 
-    rdelta87 = rdistance87 / divisor;
-    gdelta87 = gdistance87 / divisor;
-    bdelta87 = bdistance87 / divisor;
+  rdelta87 = rdistance87 / divisor;
+  gdelta87 = gdistance87 / divisor;
+  bdelta87 = bdistance87 / divisor;
 
-    rdelta87 *= 2;
-    gdelta87 *= 2;
-    bdelta87 *= 2;
+  rdelta87 *= 2;
+  gdelta87 *= 2;
+  bdelta87 *= 2;
 
-    r88 = startcolor.r << 8;
-    g88 = startcolor.g << 8;
-    b88 = startcolor.b << 8;
-    for( i = startpos; i <= endpos; i++) {
-        leds[i] = CRGB( r88 >> 8, g88 >> 8, b88 >> 8);
-        r88 += rdelta87;
-        g88 += gdelta87;
-        b88 += bdelta87;
-    }
+  r88 = startcolor.r << 8;
+  g88 = startcolor.g << 8;
+  b88 = startcolor.b << 8;
+  for ( i = startpos; i <= endpos; i++) {
+    leds[i] = CRGB( r88 >> 8, g88 >> 8, b88 >> 8);
+    r88 += rdelta87;
+    g88 += gdelta87;
+    b88 += bdelta87;
+  }
 }
 
 void fill_gradient_RGBW()
 {
-    // if the points are in the wrong order, straighten them
-    if (endpos < startpos) {
-        t = endpos;
-        tc_W = endcolor_W;
-        endcolor_W = startcolor_W;
-        endpos = startpos;
-        startpos = t;
-        startcolor_W = tc_W;
-    }
+  // if the points are in the wrong order, straighten them
+  if (endpos < startpos) {
+    t = endpos;
+    tc_W = endcolor_W;
+    endcolor_W = startcolor_W;
+    endpos = startpos;
+    startpos = t;
+    startcolor_W = tc_W;
+  }
 
-    rdistance87 = (endcolor_W.r - startcolor_W.r) << 7;
-    gdistance87 = (endcolor_W.g - startcolor_W.g) << 7;
-    bdistance87 = (endcolor_W.b - startcolor_W.b) << 7;
-    wdistance87 = (endcolor_W.w - startcolor_W.w) << 7;
+  rdistance87 = (endcolor_W.r - startcolor_W.r) << 7;
+  gdistance87 = (endcolor_W.g - startcolor_W.g) << 7;
+  bdistance87 = (endcolor_W.b - startcolor_W.b) << 7;
+  wdistance87 = (endcolor_W.w - startcolor_W.w) << 7;
 
-     pixeldistance = endpos - startpos;
-     divisor = pixeldistance ? pixeldistance : 1;
+  pixeldistance = endpos - startpos;
+  divisor = pixeldistance ? pixeldistance : 1;
 
-     rdelta87 = rdistance87 / divisor;
-     gdelta87 = gdistance87 / divisor;
-     bdelta87 = bdistance87 / divisor;
-     wdelta87 = wdistance87 / divisor;
+  rdelta87 = rdistance87 / divisor;
+  gdelta87 = gdistance87 / divisor;
+  bdelta87 = bdistance87 / divisor;
+  wdelta87 = wdistance87 / divisor;
 
-    rdelta87 *= 2;
-    gdelta87 *= 2;
-    bdelta87 *= 2;
-    wdelta87 *= 2;
+  rdelta87 *= 2;
+  gdelta87 *= 2;
+  bdelta87 *= 2;
+  wdelta87 *= 2;
 
-     r88 = startcolor_W.r << 8;
-     g88 = startcolor_W.g << 8;
-     b88 = startcolor_W.b << 8;
-     w88 = startcolor_W.w << 8;
-    for ( i = startpos; i <= endpos; i++) {
-        ledsW[i] = CRGBW(r88 >> 8, g88 >> 8, b88 >> 8, w88 >> 8);
-        r88 += rdelta87;
-        g88 += gdelta87;
-        b88 += bdelta87;
-        w88 += wdelta87;
-    }
+  r88 = startcolor_W.r << 8;
+  g88 = startcolor_W.g << 8;
+  b88 = startcolor_W.b << 8;
+  w88 = startcolor_W.w << 8;
+  for ( i = startpos; i <= endpos; i++) {
+    ledsW[i] = CRGBW(r88 >> 8, g88 >> 8, b88 >> 8, w88 >> 8);
+    r88 += rdelta87;
+    g88 += gdelta87;
+    b88 += bdelta87;
+    w88 += wdelta87;
+  }
 }
