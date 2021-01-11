@@ -41,7 +41,7 @@ const char SPIFFS_file_name[] =     "/effects.txt";
 //==============================
 struct handler {
   char handlerChar[argsPrevixLen];
-  uint16_t handlerVal;
+  short handlerVal;
 };
 
 
