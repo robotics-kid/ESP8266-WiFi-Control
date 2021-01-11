@@ -16,7 +16,7 @@
 #include <string.h>
 #include <FS.h>
 
-#include "FastLED.h"
+#include <Adafruit_NeoPixel.h>
 #include "Settings.h"
 
 // Serial
@@ -49,26 +49,9 @@ void setup() {
   //====================
 
   // Initializing leds. Based on LEDS TYPE
-#if LEDS_TYPE == 1
-  FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(ledsRGB, getRGBWsize(NUM_LEDS)); // Set up for SK6812
-#else
-  FastLED.addLeds<STRIP_NAME, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS); // Set up for all non white leds
-#endif
-
-  switch (LEDS_TYPE) {
-    case 1:
-      FastLED.setCorrection(UncorrectedColor); // SK6812
-      FastLED.setCorrection(Typical8mmPixel); // SK6812
-    case 2:
-      FastLED.setCorrection(TypicalPixelString); //FOR WS2812B
-      FastLED.setTemperature(CoolWhiteFluorescent); //FOR WS2812B
-    case 3:
-    case 4:
-      FastLED.setCorrection(UncorrectedColor); // WS2811
-      FastLED.setTemperature(CarbonArc); //WS2811
-  }
-
-  FastLED.setBrightness(MAX_BRIGHTNESS); // Setting maximum alowed brightness
+  strip.begin();
+  strip.clear();
+  strip.setBrightness(MAX_BRIGHTNESS); // Setting maximum alowed brightness
 
   //Mounting SPIFFS on ESP
   //====================
