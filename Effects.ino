@@ -11,8 +11,8 @@ void colorEffect()
 // Fills led strip with white color with adjustable color temperature(SK6812 only)
 void whiteEffect()
 {
-  if (COLOR_ORDER == NEO_RGBW or COLOR_ORDER == NEO_GRBW)
-  {
+  //if (COLOR_ORDER == NEO_RGBW or COLOR_ORDER == NEO_GRBW)
+  //{
     WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, 0, 510); // Map recieved kelvin values into my pseudo range from 0 - 510
     WiFiHandler[2].handlerVal = map(WiFiHandler[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNES
 
@@ -29,7 +29,7 @@ void whiteEffect()
       // CRGBW(255, 255, 255, 0);    Cold white
     }
     strip.show();
-  }
+  //}
 }
 
 // Fills led strip with static gradient with recieved colors

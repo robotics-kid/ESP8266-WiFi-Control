@@ -1,0 +1,2 @@
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\Debug\Kelvin To Rgb.exe
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\Debug\Kelvin To Rgb.pdb

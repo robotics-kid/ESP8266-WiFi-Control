@@ -1,0 +1,14 @@
+﻿  main.c
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(13,60): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(24,63): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(32,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(35,59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(42,16): warning C4013: 'clamp' undefined; assuming extern returning int
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(42,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(43,33): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(44,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(6,1): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(54,40): warning C4142: 'clamp': benign redefinition of type
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(56,30): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\main.c(57,30): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  Kelvin To Rgb.vcxproj -> C:\Users\Nikita\Desktop\LedStripNew\Kelvin to rgb Test\Kelvin To Rgb\Debug\Kelvin To Rgb.exe

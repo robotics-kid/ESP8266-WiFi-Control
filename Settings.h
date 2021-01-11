@@ -5,7 +5,7 @@
 #define DATA_PIN              D6
 #define LEDS_TYPE             NEO_KHZ800                 // NEO_KHZ800 - SK6812, WS2812B, WS2812; NEO_KHZ400 - WS2811
 #define MAX_BRIGHTNESS        250
-#define COLOR_ORDER           NEO_GRB               // NEO_GRB - WS2812B; NEO_GRBW - SK5812
+#define COLOR_ORDER           NEO_GRBW               // NEO_GRB - WS2812B; NEO_GRBW - SK5812
 #define WIDTH                 1
 #define HEIGHT                37
 
