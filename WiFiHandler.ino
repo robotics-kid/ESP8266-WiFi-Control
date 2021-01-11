@@ -10,9 +10,9 @@ void sendRecieve()
   client.setTimeout(5000);
 
   //Send Data to connected client
-  memset(buf, '\0', sizeof(buf));
-  mSend.toCharArray(buf, argsLen);
-  client.write(buf);
+  memset(SendBuffer, '\0', sizeof(SendBuffer));
+  mSend.toCharArray(SendBuffer, argsLen);
+  client.write(SendBuffer);
   //client.flush();
   
   recv_str = client.readStringUntil('!');

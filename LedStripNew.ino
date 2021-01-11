@@ -45,7 +45,7 @@ void setup() {
   Serial.println("ESP ready");
   Serial.print("IP is : "); Serial.println(WiFi.softAPIP());
   Serial.print("IP is : "); Serial.println(WiFi.localIP());
-  Serial.print("Port is : "); Serial.println(port);
+  Serial.print("Port is : "); Serial.println(PORT);
   //====================
 
   // Initializing leds. Based on LEDS TYPE

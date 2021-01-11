@@ -3,9 +3,9 @@
 #include <WiFiClient.h>
 
 #define DATA_PIN              D6
-#define LEDS_TYPE             NEO_KHZ800                 // 1 - SK6812; 2 - WS2812B; 3 - WS2812; 4 - WS2811
+#define LEDS_TYPE             NEO_KHZ800                 // NEO_KHZ800 - SK6812, WS2812B, WS2812; NEO_KHZ400 - WS2811
 #define MAX_BRIGHTNESS        250
-#define COLOR_ORDER           NEO_RGBW               // GRB - WS2812B
+#define COLOR_ORDER           NEO_GRB               // NEO_GRB - WS2812B; NEO_GRBW - SK5812
 #define WIDTH                 1
 #define HEIGHT                37
 
@@ -13,16 +13,16 @@
 #define APPSK                 "qwertyuiop"       // Password of local WiFi Netdwork
 
 #define MAX_CLIENTS           4                 // Maximum clients connection
-int port =                    80;               // Port number
+#define PORT                  80              // Port number
 const char* ip =              "192.168.4.1";    // Local ip for AP
 const char* sub =             "255.255.255.0";
 
-char root_previx[] =          "FoViBalTLight";  // root previx of protocol (root_previx:F:1:H:230..)
+const char root_previx[] =          "FoViBalTLight";  // root previx of protocol (root_previx:F:1:H:230..)
 const size_t argsLen =        100;              // maximum recieve date length
 const size_t argsPrevixLen =  4;
 const char del[3] =           ":;";             // Default protocol value delimiter
 
-String SPIFFS_file_name =     "/effects.txt";
+const char SPIFFS_file_name[] =     "/effects.txt";
 
 //Definition of led strip types
 //==============================
@@ -41,7 +41,7 @@ String SPIFFS_file_name =     "/effects.txt";
 //==============================
 struct handler {
   char handlerChar[argsPrevixLen];
-  int handlerVal;
+  uint16_t handlerVal;
 };
 
 
@@ -49,11 +49,13 @@ handler WiFiHandler[argsLen]; // Defining an array of handled values
 
 String mSend = String(root_previx) + ";STA:1!"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1
 String preRecv = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0!";
-char recv[argsLen];
 String recv_str;
+
+char recv[argsLen];
+char SendBuffer[argsLen];
+
 char *token;
-int i;
-char buf[argsLen];
+uint16_t i;
 bool flag;
 //==============================
 
@@ -67,6 +69,6 @@ bool err2 = subnet.fromString(sub);
 const char *ssid = APSSID;
 const char *password = APPSK;
 
-WiFiServer server(port); // Setting up server
+WiFiServer server(PORT); // Setting up server
 WiFiClient serverClients[MAX_CLIENTS]; // Limit num of conected clients
 WiFiClient client;
