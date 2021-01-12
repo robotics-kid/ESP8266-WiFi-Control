@@ -57,6 +57,7 @@ char SendBuffer[argsLen];
 char *token;
 uint16_t i;
 bool flag;
+int j = 0;
 //==============================
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, DATA_PIN, COLOR_ORDER + LEDS_TYPE);

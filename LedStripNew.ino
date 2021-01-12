@@ -95,22 +95,29 @@ void loop() {
       /*Serial.println();
       Serial.print("mSend: ");
       Serial.println(mSend);*/
+      
+      j++;
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
+      
       recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
+      
       if (preRecv == recv_str) {
         //Serial.println("Spam");
         continue;
       }
+      
       /*Serial.print("recv: ");
       Serial.write(recv);
       Serial.println();*/
 
       Tokenizer(); // Tokenzie recieved from WiFi string and starts effect*/
+      
       if (mSend == "FoViBalTLight;STA:0!")
       {
         break;
       }
       preRecv = recv_str;
+      
     }
     Serial.println("Client disconnected");
     mSend = String(root_previx) + ";STA:1!"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1x

@@ -7,15 +7,35 @@
 void sendRecieve()
 {
   //Serial.println("send recieve enter");
-  client.setTimeout(5000);
+  
 
   //Send Data to connected client
   memset(SendBuffer, '\0', sizeof(SendBuffer));
   mSend.toCharArray(SendBuffer, argsLen);
   client.write(SendBuffer);
   //client.flush();
-  
-  recv_str = client.readStringUntil('!');
+
+ // Serial.print("BEFORE recieve");
+  //Serial.println(millis());
+  unsigned long starttime = millis();
+  bool flag1 = false;
+  recv_str = "";
+  while (true) {
+    while (client.available()) {
+      recv_str += (char)client.read();
+
+      flag1 = true;
+    }
+    if (flag1) {
+      break;
+    }
+    if ( millis() - starttime > 5000) {
+      client.stop();
+      break;
+    }
+  }
+  //Serial.print("AFTER recieve");
+  //Serial.println(millis());
   //client.flush();
 }
 
@@ -25,7 +45,9 @@ void effectHandler()
 
   if (!strcmp(WiFiHandler[0].handlerChar, "EFF"))
   {
+;
     WriteSPIFFS();
+    //Serial.print(millis());
 
     switch (WiFiHandler[0].handlerVal) // Tutn on effect prepare functions proceeding from WiFiHandler array value
     {
@@ -58,29 +80,29 @@ void effectHandler()
 
 void Tokenizer()
 {
-  
   if (!strcmp(recv, "")) {
     mSend = "FoViBalTLight;STA:0!";
     return;
   }
-
+  
   memset(WiFiHandler, '\0', sizeof(handler)*argsLen); // Filling WiFiHandler with NULL values
 
   token = strtok(recv, del); // Initialize token to split recv by delimiter
-
+  
   i = 0;
   flag = false;
   while (token != NULL)
   {
     //Serial.println(token);
     // Checks if token[0] is equal to root_previx
+    
     if (i == 0 and strcmp(token, root_previx))
     {
       Serial.println("is NULL");
       mSend = "FoViBalTLight;STA:0!";
       return;
     }
-
+    
     // If it is not first root_previx
     if (flag)
     {
@@ -93,6 +115,7 @@ void Tokenizer()
         strcpy(WiFiHandler[(i + 1) / 2 - 1].handlerChar, token);
       }
     }
+    
     token = strtok(NULL, del); // Incrementing token
     flag = true;
     i++;

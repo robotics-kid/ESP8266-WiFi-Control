@@ -4,8 +4,12 @@
 // Fills led strip with solid color from recieved data
 void colorEffect()
 {
+  //Serial.print("BEFORE solid: ");       
+  //Serial.println(millis()); 
   strip.fill(strip.Color(WiFiHandler[1].handlerVal, WiFiHandler[2].handlerVal, WiFiHandler[3].handlerVal, WiFiHandler[4].handlerVal), 0, NUM_LEDS);
   strip.show();
+  //Serial.print("AFTER solid: ");       
+  //Serial.println(millis());       
 }
 
 // Fills led strip with white color with adjustable color temperature(SK6812 only)
@@ -13,6 +17,7 @@ void whiteEffect()
 {
   //if (COLOR_ORDER == NEO_RGBW or COLOR_ORDER == NEO_GRBW)
   //{
+  
     WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, -255, 765); // Map recieved kelvin values into my pseudo range from 0 - 510
     WiFiHandler[2].handlerVal = map(WiFiHandler[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNES
 
