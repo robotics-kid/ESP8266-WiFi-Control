@@ -3,10 +3,9 @@
 #include "Settings.h"
 
 File file;
-int bytesWritten;
 
 // Read from SPIFFS: read string ReadSPIFFS(file name)
-void ReadSPIFFS()
+String ReadSPIFFS()
 {
 
   file  = SPIFFS.open(SPIFFS_file_name, "r"); // Openning file from SPIFFS
@@ -23,10 +22,11 @@ void ReadSPIFFS()
   }
 
   file.close();
+  return recv_str;
 }
 
 // Write string to SPIFFS: writed sucesefuly or not WriteSPIFFS(file name, writting string)
-void WriteSPIFFS()
+void WriteSPIFFS(String* recv_str)
 {
   
   file = SPIFFS.open(SPIFFS_file_name, "w"); // Openning file from SPIFFS
@@ -37,7 +37,7 @@ void WriteSPIFFS()
     return;
   }
 
-  bytesWritten = file.print(recv_str); // Write string in SPIFFS
+ int bytesWritten = file.print(*recv_str); // Write string in SPIFFS
  
   if (bytesWritten == 0) // Check if written sucesseful
   {

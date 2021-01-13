@@ -4,6 +4,7 @@
 // Fills led strip with solid color from recieved data
 void colorEffect()
 {
+
   //Serial.print("BEFORE solid: ");       
   //Serial.println(millis()); 
   strip.fill(strip.Color(WiFiHandler[1].handlerVal, WiFiHandler[2].handlerVal, WiFiHandler[3].handlerVal, WiFiHandler[4].handlerVal), 0, NUM_LEDS);
@@ -46,7 +47,7 @@ void whiteEffect()
 // Fills led strip with static gradient with recieved colors
 void gradientEffect_2Val()
 {
-  for (i = 0; i < NUM_LEDS; i++)
+  for (uint16_t i = 0; i < NUM_LEDS; i++)
   {
     strip.setPixelColor(i,  mix( WiFiHandler[1].handlerVal, WiFiHandler[5].handlerVal, i, NUM_LEDS ),
                             mix( WiFiHandler[2].handlerVal, WiFiHandler[6].handlerVal, i, NUM_LEDS ),

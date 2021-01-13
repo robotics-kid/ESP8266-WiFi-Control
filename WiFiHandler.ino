@@ -2,6 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include "Settings.h"
+unsigned long starttime = 0;
 
 //Function sendRecieve - takes date to send and - return recieved date
 void sendRecieve()
@@ -10,23 +11,22 @@ void sendRecieve()
   
 
   //Send Data to connected client
+  char SendBuffer[argsLen];
   memset(SendBuffer, '\0', sizeof(SendBuffer));
   mSend.toCharArray(SendBuffer, argsLen);
+  
   client.write(SendBuffer);
-  //client.flush();
 
- // Serial.print("BEFORE recieve");
-  //Serial.println(millis());
-  unsigned long starttime = millis();
-  bool flag1 = false;
+  starttime = millis();
+  bool recv_flag = false;
   recv_str = "";
   while (true) {
     while (client.available()) {
       recv_str += (char)client.read();
 
-      flag1 = true;
+      recv_flag = true;
     }
-    if (flag1) {
+    if (recv_flag) {
       break;
     }
     if ( millis() - starttime > 5000) {
@@ -34,9 +34,6 @@ void sendRecieve()
       break;
     }
   }
-  //Serial.print("AFTER recieve");
-  //Serial.println(millis());
-  //client.flush();
 }
 
 //Function turn on special effect proceeding from WiFiHandler array and it's arguments
@@ -46,7 +43,7 @@ void effectHandler()
   if (!strcmp(WiFiHandler[0].handlerChar, "EFF"))
   {
 ;
-    WriteSPIFFS();
+    WriteSPIFFS(&recv_str);
     //Serial.print(millis());
 
     switch (WiFiHandler[0].handlerVal) // Tutn on effect prepare functions proceeding from WiFiHandler array value
@@ -78,7 +75,7 @@ void effectHandler()
 
 }
 
-void Tokenizer()
+void Tokenizer(char recv[])
 {
   if (!strcmp(recv, "")) {
     mSend = "FoViBalTLight;STA:0!";
@@ -87,10 +84,10 @@ void Tokenizer()
   
   memset(WiFiHandler, '\0', sizeof(handler)*argsLen); // Filling WiFiHandler with NULL values
 
-  token = strtok(recv, del); // Initialize token to split recv by delimiter
+  char* token = strtok(recv, del); // Initialize token to split recv by delimiter
   
-  i = 0;
-  flag = false;
+  uint16_t i = 0;
+  bool flag = false;
   while (token != NULL)
   {
     //Serial.println(token);

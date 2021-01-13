@@ -52,12 +52,6 @@ String preRecv = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0!";
 String recv_str;
 
 char recv[argsLen];
-char SendBuffer[argsLen];
-
-char *token;
-uint16_t i;
-bool flag;
-int j = 0;
 //==============================
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, DATA_PIN, COLOR_ORDER + LEDS_TYPE);

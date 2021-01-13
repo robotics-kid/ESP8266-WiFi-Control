@@ -64,14 +64,14 @@ void setup() {
 
   //Checking for saved effect is SPIFFS
   //====================
-  ReadSPIFFS(); // Reads from SPIFFS
+  recv_str = ReadSPIFFS(); // Reads from SPIFFS
   if (recv_str != "-1")
   {
     preRecv = recv_str;
     char effect[argsLen];
     recv_str.toCharArray(effect, argsLen);
     Serial.println(recv_str);
-    Tokenizer(); // Tokenzie read string and starts effect
+    Tokenizer(effect); // Tokenzie read string and starts effect
   }
   //====================
   Serial.println("Setup ready");
@@ -96,7 +96,6 @@ void loop() {
       Serial.print("mSend: ");
       Serial.println(mSend);*/
       
-      j++;
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
       
       recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
@@ -110,7 +109,7 @@ void loop() {
       Serial.write(recv);
       Serial.println();*/
 
-      Tokenizer(); // Tokenzie recieved from WiFi string and starts effect*/
+      Tokenizer(recv); // Tokenzie recieved from WiFi string and starts effect*/
       
       if (mSend == "FoViBalTLight;STA:0!")
       {
