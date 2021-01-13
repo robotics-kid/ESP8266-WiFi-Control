@@ -22,6 +22,9 @@
 // Serial
 void setup() {
 
+  strcat(mSend, root_previx);
+  strcat(mSend, ";STA:1");
+
   Serial.begin(115200);
   delay(1000); // Slow power up delay.
 
@@ -64,14 +67,13 @@ void setup() {
 
   //Checking for saved effect is SPIFFS
   //====================
-  recv_str = ReadSPIFFS(); // Reads from SPIFFS
-  if (recv_str != "-1")
+  ReadSPIFFS(); // Reads from SPIFFS
+  if (strcmp(recv_str, "-1"))
   {
-    preRecv = recv_str;
-    char effect[argsLen];
-    recv_str.toCharArray(effect, argsLen);
+    strcpy(preRecv, recv_str);
+    strcpy(toSPIFFS, recv_str);
     Serial.println(recv_str);
-    Tokenizer(effect); // Tokenzie read string and starts effect
+    Tokenizer(recv_str); // Tokenzie read string and starts effect
   }
   //====================
   Serial.println("Setup ready");
@@ -80,7 +82,7 @@ void setup() {
 void loop() {
 
   client = server.available(); // Starting WiFi Server
-  
+
   if (client) // If client is available
   {
     // Printing message of sucefull connection
@@ -90,36 +92,39 @@ void loop() {
     // Starting client handle(while client is connected)
     while (client.connected())
     {
-      memset(recv, '\0', sizeof(recv));
+      memset(recv, '\0', sizeof(char)*argsLen);
 
-      /*Serial.println();
+      Serial.println();
       Serial.print("mSend: ");
-      Serial.println(mSend);*/
-      
+      Serial.println(mSend);
+
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
-      
-      recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
-      
-      if (preRecv == recv_str) {
-        //Serial.println("Spam");
+      Serial.print("recv: ");
+      Serial.println(recv_str);
+      //recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
+
+      if (!strcmp(preRecv, recv_str)) {
+        Serial.println("Spam");
         continue;
       }
-      
-      /*Serial.print("recv: ");
-      Serial.write(recv);
-      Serial.println();*/
 
-      Tokenizer(recv); // Tokenzie recieved from WiFi string and starts effect*/
-      
-      if (mSend == "FoViBalTLight;STA:0!")
+      /*Serial.print("recv: ");
+        Serial.write(recv);
+        Serial.println();*/
+      strcpy(toSPIFFS, recv_str);
+      Tokenizer(recv_str); // Tokenzie recieved from WiFi string and starts effect*/
+
+      if (!strcmp(mSend, "FoViBalTLight;STA:0"))
       {
         break;
       }
-      preRecv = recv_str;
-      
+      strcpy(preRecv, toSPIFFS);
+
     }
     Serial.println("Client disconnected");
-    mSend = String(root_previx) + ";STA:1!"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1x
+    memset(mSend, '\0', sizeof(char)*argsLen);
+    strcat(mSend, root_previx);
+    strcat(mSend, ";STA:1");
     client.stop();
   }
 

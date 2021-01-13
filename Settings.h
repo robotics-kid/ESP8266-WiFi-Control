@@ -32,6 +32,12 @@ const char SPIFFS_file_name[] =     "/effects.txt";
 #define STRIP_TYPE  2
 #endif
 
+#if COLO_ORDER == NEO_RGBW or COLOR_ORDER == NEO_GRBW or COLOR_ORDER == NEO_GBRW or COLOR_ORDER == NEO_BRGW or COLOR_ORDER == NEO_BGRW or COLOR_ORDER == NEO_RBGW
+#define LEDS_TYPE_S 1
+#else
+#define LEDS_TYPE_S 2
+#endif
+
 #define NUM_LEDS WIDTH*HEIGHT
 //==============================
 
@@ -47,10 +53,10 @@ struct handler {
 
 handler WiFiHandler[argsLen]; // Defining an array of handled values
 
-String mSend = String(root_previx) + ";STA:1!"; // Creating first mSend witch contain handshake: FoViBalTLight;STA:1
-String preRecv = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0!";
-String recv_str;
-
+char mSend[argsLen];  // Creating first mSend witch contain handshake: FoViBalTLight;STA:1
+char preRecv[argsLen] = "FoViBalTLight;EFF:1;RED:255;GRN:0;BLU:0;WHT:0";
+char recv_str[argsLen];
+char toSPIFFS[argsLen];
 char recv[argsLen];
 //==============================
 
