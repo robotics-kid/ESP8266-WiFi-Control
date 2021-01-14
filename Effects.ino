@@ -4,6 +4,7 @@
 // Fills led strip with solid color from recieved data
 void colorEffect()
 {
+
   //Serial.print("BEFORE solid: ");       
   //Serial.println(millis()); 
   strip.fill(strip.Color(WiFiHandler[1].handlerVal, WiFiHandler[2].handlerVal, WiFiHandler[3].handlerVal, WiFiHandler[4].handlerVal), 0, NUM_LEDS);

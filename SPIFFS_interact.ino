@@ -38,6 +38,7 @@ void WriteSPIFFS(char recv_str[])
     Serial.println("Error opening file for writing");
     return;
   }
+  uint16_t i = strlen(recv_str);
   uint16_t bytesWritten = file.write(recv_str, argsLen);
 
   if (bytesWritten == 0) // Check if written sucesseful
