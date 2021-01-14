@@ -44,9 +44,6 @@ void effectHandler()
   {
     
     WriteSPIFFS(toSPIFFS);
-    //ReadSPIFFS();
-    //Serial.print("read from SPIFFS: ");
-    //Serial.println(recv_str);
 
     switch (WiFiHandler[0].handlerVal) // Tutn on effect prepare functions proceeding from WiFiHandler array value
     {
@@ -70,7 +67,7 @@ void effectHandler()
   else if (!strcmp(WiFiHandler[0].handlerChar, "STA") and WiFiHandler[0].handlerVal == 1)
   {
 
-    char buff[10];
+    char buff[2];
 
     memset(mSend, '\0', sizeof(char)*argsLen);
     strcat(mSend, root_previx);
@@ -90,10 +87,7 @@ void effectHandler()
     memset(mSend, '\0', sizeof(char)*argsLen);
     strcat(mSend, root_previx);
     strcat(mSend, ";STA:1");
-
   }
-
-
 }
 
 void Tokenizer(char recv[])
@@ -114,7 +108,6 @@ void Tokenizer(char recv[])
   bool flag = false;
   while (token != NULL)
   {
-    //Serial.println(token);
     // Checks if token[0] is equal to root_previx
 
     if (i == 0 and strcmp(token, root_previx))

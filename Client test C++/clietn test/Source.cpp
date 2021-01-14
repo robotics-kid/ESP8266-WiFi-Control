@@ -13,7 +13,7 @@ std::mutex mtx;
 SOCKET Connection;
 
 int main() {
-	char rec[100] = { 0 };
+	const uint8_t delayTime = 100;
 	//Socket connection
 	WSAData wsaData;
 	WORD DLLVersion = MAKEWORD(2, 1);
@@ -37,17 +37,20 @@ int main() {
 	//////////////////////
 	////////////
 	int i = 0;
-	char send1[] = "FoViBalTLight;EFF:1;HUE:255;SAT:255;VAL:0!";
-	char send2[] = "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0!";
+	char send1[] = "FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0!";
+	char send2[] = "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0;WHT:0!";
 	int recvByt = 1;
+	send1[strlen(send1) - 1] = '\0';
+	send2[strlen(send2) - 1] = '\0';
 	while (true) {
-		Sleep(3000);
-		int bytesSend = send(Connection, send1, sizeof(send1), NULL	);
-		std::cout << "Send: " << bytesSend << std::endl;
-		Sleep(3000);
-		bytesSend = send(Connection, send2, sizeof(send2), NULL);
-		std::cout << "Send: " << bytesSend << std::endl;
-		Sleep(3000);
+		
+		send(Connection, send1, sizeof(send1), NULL	);
+		//std::cout << "Send: " << bytesSend << std::endl;
+		Sleep(delayTime);
+		
+		send(Connection, send2, sizeof(send2), NULL);
+		//std::cout << "Send: " << bytesSend << std::endl;
+		Sleep(delayTime);
 	}
 		//send(Connection, "FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n", sizeof("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0\n"), NULL);
 		//Sleep(1000);

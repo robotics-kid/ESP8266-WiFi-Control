@@ -93,24 +93,14 @@ void loop() {
     while (client.connected())
     {
       memset(recv, '\0', sizeof(char)*argsLen);
-
-      Serial.println();
-      Serial.print("mSend: ");
-      Serial.println(mSend);
-
+      
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
-      Serial.print("recv: ");
-      Serial.println(recv_str);
-      //recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
 
       if (!strcmp(preRecv, recv_str)) {
-        Serial.println("Spam");
+        //Serial.println("Spam");
         continue;
       }
 
-      /*Serial.print("recv: ");
-        Serial.write(recv);
-        Serial.println();*/
       strcpy(toSPIFFS, recv_str);
       Tokenizer(recv_str); // Tokenzie recieved from WiFi string and starts effect*/
 
@@ -119,8 +109,8 @@ void loop() {
         break;
       }
       strcpy(preRecv, toSPIFFS);
-
     }
+    
     Serial.println("Client disconnected");
     memset(mSend, '\0', sizeof(char)*argsLen);
     strcat(mSend, root_previx);
