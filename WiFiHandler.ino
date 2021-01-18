@@ -8,19 +8,20 @@ unsigned long starttime = 0;
 void sendRecieve()
 {
   client.write(mSend);
+  //Serial.println("msend end");
 
   memset(recv_str, '\0', sizeof(char) * argsLen);
   starttime = millis();
-  
+
   bool recv_flag = false;
   int i = 0;
   while (true)
   {
     while (client.available())
     {
-      
+
       recv_str[i] = (char)client.read();
-     
+
       recv_flag = true;
       i++;
     }
@@ -42,7 +43,7 @@ void effectHandler()
 
   if (!strcmp(WiFiHandler[0].handlerChar, "EFF"))
   {
-    
+
     WriteSPIFFS(toSPIFFS);
     //ReadSPIFFS();
     //Serial.print("read from SPIFFS: ");
@@ -98,6 +99,7 @@ void effectHandler()
 
 void Tokenizer(char recv[])
 {
+
   if (!strcmp(recv, ""))
   {
     memset(mSend, '\0', sizeof(char)*argsLen);
@@ -112,6 +114,7 @@ void Tokenizer(char recv[])
 
   uint16_t i = 0;
   bool flag = false;
+
   while (token != NULL)
   {
     //Serial.println(token);

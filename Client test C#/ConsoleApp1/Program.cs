@@ -10,7 +10,7 @@ public class clnt
 
     public static void Main()
     {
-
+        UInt16 timeDelayed = 20;
         try
         {
             //FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0!
@@ -35,9 +35,9 @@ public class clnt
             while (true)
             {
                 stm.Write(send, 0, send.Length);
-                System.Threading.Thread.Sleep(5);
+                System.Threading.Thread.Sleep(timeDelayed);
                 stm.Write(send1, 0, send1.Length);
-                System.Threading.Thread.Sleep(5);
+                System.Threading.Thread.Sleep(timeDelayed);
             }
 
             byte[] recv = new byte[1024];

@@ -92,27 +92,25 @@ void loop() {
     // Starting client handle(while client is connected)
     while (client.connected())
     {
-      memset(recv, '\0', sizeof(char)*argsLen);
+      memset(recv_str, '\0', sizeof(char)*argsLen);
 
-      Serial.println();
+      /*Serial.println();
       Serial.print("mSend: ");
-      Serial.println(mSend);
+      Serial.println(mSend);*/
 
       sendRecieve(); //Function sendRecieve - takes date to send and - return recieved date {String sendRecieve(String, *WiFIClient)}
-      Serial.print("recv: ");
-      Serial.println(recv_str);
+      /*Serial.print("recv: ");
+      Serial.println(recv_str);*/
       //recv_str.toCharArray(recv, argsLen); // Converting tmp string to char array recv
 
       if (!strcmp(preRecv, recv_str)) {
         Serial.println("Spam");
         continue;
       }
-
-      /*Serial.print("recv: ");
-        Serial.write(recv);
-        Serial.println();*/
-      strcpy(toSPIFFS, recv_str);
-      Tokenizer(recv_str); // Tokenzie recieved from WiFi string and starts effect*/
+      char recv_tmp[argsLen];
+      strncpy(recv_tmp, recv_str, argsLen);
+      
+      Tokenizer(recv_tmp); // Tokenzie recieved from WiFi string and starts effect*/
 
       if (!strcmp(mSend, "FoViBalTLight;STA:0"))
       {
