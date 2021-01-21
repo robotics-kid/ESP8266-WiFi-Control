@@ -25,17 +25,6 @@ void colorEffect()
   white = WiFiHandler[4].handlerVal;
   isWhite = LEDS_TYPE;
 
-  Serial.print("red: ");
-  Serial.println(rgb.r);
-  Serial.print("green: ");
-  Serial.println(rgb.g);
-  
-  Serial.print("blue: ");
-  Serial.println(rgb.b);
-  
-  Serial.print("white: ");
-  Serial.println(white);
-
   //-1 goes if led strip does not have white leds or if led strip is SK6812
   if (isWhite != 1)
   { 
@@ -56,18 +45,8 @@ void colorEffect()
 void whiteEffect()
 {
 
-  Serial.print("White Kelvin: ");
-  Serial.println(WiFiHandler[1].handlerVal);
-  Serial.print("White BRI recieved: ");
-  Serial.println(WiFiHandler[2].handlerVal);
-
   WiFiHandler[1].handlerVal = map(WiFiHandler[1].handlerVal, 1800, 6500, -255, 765); // Map recieved kelvin values into my pseudo range from 0 - 510
   WiFiHandler[2].handlerVal = map(WiFiHandler[2].handlerVal, 0, 255, 0, MAX_BRIGHTNESS); // Map recieved brightnes value into brightness towards MAX_BRIGHTNESS
-
-  Serial.print("White My pseudo range: ");
-  Serial.println(WiFiHandler[1].handlerVal);
-  Serial.print("White BRI converted towards MAX_BRI: ");
-  Serial.println(WiFiHandler[2].handlerVal);
 
   FastLED.setBrightness(WiFiHandler[2].handlerVal);
 
