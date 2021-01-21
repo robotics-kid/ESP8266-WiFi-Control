@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <FS.h>
+#include <LittleFS.h>
 
 #include <Adafruit_NeoPixel.h>
 #include "Settings.h"
@@ -58,7 +58,7 @@ void setup() {
 
   //Mounting SPIFFS on ESP
   //====================
-  if (!SPIFFS.begin()) // Starting SPIFFS
+  if (!LittleFS.begin()) // Starting SPIFFS
   {
     Serial.println("Error mounting the file system");
     return;

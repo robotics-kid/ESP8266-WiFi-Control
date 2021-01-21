@@ -13,7 +13,7 @@
 #define APPSK                 "qwertyuiop"       // Password of local WiFi Netdwork
 
 #define MAX_CLIENTS           4                 // Maximum clients connection
-#define PORT                  80              // Port number
+#define PORT                  6295              // Port number
 const char* ip =              "192.168.4.1";    // Local ip for AP
 const char* sub =             "255.255.255.0";
 

@@ -9,7 +9,7 @@ void ReadSPIFFS()
 {
 
   memset(recv_str, '\0', sizeof(char) * argsLen);
-  file  = SPIFFS.open(SPIFFS_file_name, "r"); // Openning file from SPIFFS
+  file  = LittleFS.open(SPIFFS_file_name, "r"); // Openning file from SPIFFS
 
   if (!file) // Cheking if file opened normaly
   {
@@ -31,7 +31,7 @@ void ReadSPIFFS()
 void WriteSPIFFS(char recv_str[])
 {
 
-  file = SPIFFS.open(SPIFFS_file_name, "w"); // Openning file from SPIFFS
+  file = LittleFS.open(SPIFFS_file_name, "w"); // Openning file from SPIFFS
 
   if (!file) // Cheking if file opened normaly
   {
