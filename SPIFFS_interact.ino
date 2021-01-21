@@ -2,7 +2,7 @@
 #include <FS.h>
 #include "Settings.h"
 File file;
-int bytesWritten;
+uint16_t bytesWritten;
 
 // Read from SPIFFS: read string ReadSPIFFS(file name)
 void ReadSPIFFS()

@@ -31,14 +31,14 @@ void effectHandler()
     {
       case 1:
         // Extract from WiFiHandler arguments for SPECIAL EFFECT
-        colorEffect(WiFiHandler); // Color solid effect
+        colorEffect(); // Color solid effect
         break;
       case 2:
         //Extract from WiFiHandler arguments for SPECIAL EFFECT
-        whiteEffect(WiFiHandler); // White solid effect
+        whiteEffect(); // White solid effect
         break;
       case 3:
-        gradientEffect_2Val(WiFiHandler);
+        gradientEffect_2Val();
         break;
     }
     mSend = String(root_previx) + ";STA:1!";
@@ -60,6 +60,7 @@ void Tokenizer()
 {
   
   if (!strcmp(recv, "")) {
+    Serial.println("NULL string recieved");
     mSend = "FoViBalTLight;STA:0!";
     return;
   }
@@ -72,11 +73,10 @@ void Tokenizer()
   flag = false;
   while (token != NULL)
   {
-    //Serial.println(token);
     // Checks if token[0] is equal to root_previx
     if (i == 0 and strcmp(token, root_previx))
     {
-      Serial.println("is NULL");
+      Serial.println("Root prefix does not match");
       mSend = "FoViBalTLight;STA:0!";
       return;
     }

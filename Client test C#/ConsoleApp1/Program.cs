@@ -35,9 +35,9 @@ public class clnt
             while (true)
             {
                 stm.Write(send, 0, send.Length);
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(40);
                 stm.Write(send1, 0, send1.Length);
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(40);
             }
 
             byte[] recv = new byte[1024];
