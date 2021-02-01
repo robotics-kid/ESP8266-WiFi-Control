@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aXI5agIG4GQL885wr2u9ts0lZXPiTtoBiaLvv9zvaq2Qb7Y7yHV80sTqPrudSt9ZYeAIcdivzS8pg8AtLAZQpA==",
+  "dgSpecHash": "g/q20Df73K6tg7JGM2+orvDWYk77SkL5aUEWbZmbX3Lp2P9Suwlpj+zXfZUa/FBYxH/0t9L6q/w3YKAQWyxLgw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Nikita\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
-  ],
+  "projectFilePath": "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

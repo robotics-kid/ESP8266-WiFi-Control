@@ -10,25 +10,25 @@ public class clnt
 
     public static void Main()
     {
-        UInt16 timeDelayed = 20;
+        UInt16 timeDelayed = 200;
         try
         {
             //FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0!
             TcpClient tcpclnt = new TcpClient();
             Console.WriteLine("Connecting.....");
 
-            tcpclnt.Connect("192.168.4.1", 80);
+            tcpclnt.Connect("192.168.4.1", 6295);
             // use the ipaddress as in the server program
 
             Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
 
-            string str = "FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0";
+            string str = "FoViBalTLight;EFF:1;HUE:255;SAT:0;VAL:0;WHT:0!";
             Stream stm = tcpclnt.GetStream();
 
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] send = asen.GetBytes(str);
-            byte[] send1 = asen.GetBytes("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0;WHT:0");
+            byte[] send1 = asen.GetBytes("FoViBalTLight;EFF:1;HUE:0;SAT:255;VAL:0;WHT:0!");
             Console.WriteLine("Transmitting.....");
             Console.WriteLine("send: ");
             System.Threading.Thread.Sleep(1000);

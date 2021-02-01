@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectPath": "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\Nikita\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nikita\\Desktop\\LedStripNew\\Client test C#\\ConsoleApp1\\obj\\",
+        "outputPath": "F:\\ESP8266 WiFI Control\\LedStripNew\\Client test C#\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nikita\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -47,18 +49,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.2, 3.1.2]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
