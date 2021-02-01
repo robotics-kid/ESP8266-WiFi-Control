@@ -3,9 +3,9 @@
 #include <WiFiClient.h>
 
 #define DATA_PIN              6
-#define LEDS_TYPE             2                 // 1 - SK6812; 2 - WS2812B; 3 - WS2812; 4 - WS2811
+#define LEDS_TYPE             1                 // 1 - SK6812; 2 - WS2812B; 3 - WS2812; 4 - WS2811
 #define MAX_BRIGHTNESS        250
-#define COLOR_ORDER           GRB               // GRB - WS2812B
+#define COLOR_ORDER           RGB               // GRB - WS2812B
 #define WIDTH                 1
 #define HEIGHT                37
 

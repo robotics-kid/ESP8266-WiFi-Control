@@ -6,7 +6,7 @@
     Date: 8 December, 2020
 */
 
-#include <RGBConverter.h>
+//#include <RGBConverter.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 
@@ -52,6 +52,7 @@ void setup() {
 #if LEDS_TYPE == 1
   FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(ledsRGB, getRGBWsize(NUM_LEDS)); // Set up for SK6812
 #else
+
   FastLED.addLeds<STRIP_NAME, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS); // Set up for all non white leds
 #endif
 

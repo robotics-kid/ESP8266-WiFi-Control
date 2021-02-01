@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  fill_gradient_RGBW(leds, NUM_LEDS, CRGBW(255, 0, 0, 0), CRGBW(0, 255, 0,  0));
+  fill_gradient_RGBW(leds, NUM_LEDS, CRGBW(255, 0, 0, 0), CRGBW(0, 0, 0,  255));
   FastLED.show();
   delay(2000);
   
